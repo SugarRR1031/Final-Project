@@ -20,6 +20,7 @@ public class playerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        myLook = Vector3.zero;
     }
 
     // Update is called once per frame
@@ -56,26 +57,35 @@ public class playerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, myLook.x, 0f);
         myCam.transform.rotation = Quaternion.Euler(-myLook.y, myLook.x, 0f);
 
-        Vector3 Dir()
-        {
-            Vector3 moveDir = Vector3.zero;
-            float x = Input.GetAxisRaw("HorizontalWrapMode");
-            float z = Input.GetAxisRaw("Vertical");
-            moveDir = new Vector3(x, 0, z);
-            return moveDir;
-        }
 
-        Vector3 DeltaLook ()
-        {
-            Vector3 deltaLook = Vector3.zero;
-            Vector3 moveDir = Vector3.zero;
-            float rotY = Input.GetAxisRaw("Mouse Y") * lookSpeed;
-            float rotX = Input.GetAxisRaw("Mouse X") * lookSpeed;
 
-            deltaLook = new Vector3(rotX, rotY, 0);
-            return DeltaLook();
-        }
+    }
 
+    private void FixedUpdate()
+    {
+        Vector3 myDir = transform.TransformDirection(Dir());
+        rb.AddForce(myDir * speed);
+    }
+
+    Vector3 Dir()
+    {
+        Vector3 moveDir = Vector3.zero;
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
+        moveDir = new Vector3(x, 0, z);
+        return moveDir;
+
+    }
+
+    Vector3 DeltaLook()
+    {
+        Vector3 deltaLook = Vector3.zero;
+        Vector3 moveDir = Vector3.zero;
+        float rotY = Input.GetAxisRaw("Mouse Y") * lookSpeed;
+        float rotX = Input.GetAxisRaw("Mouse X") * lookSpeed;
+
+        deltaLook = new Vector3(rotX, rotY, 0);
+        return DeltaLook();
     }
 
     private void OnCollisionEnter(Collision collision)
