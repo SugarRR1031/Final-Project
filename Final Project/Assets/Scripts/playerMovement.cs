@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class playerMovement : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class playerMovement : MonoBehaviour
             rb.AddForce(Vector3.forward * speed);
         }
 
-        if (Input.GetKey(KeyCode.A))
+        /* if (Input.GetKey(KeyCode.A))
         {
             rb.AddForce(Vector3.left * speed);
         }
@@ -39,7 +40,7 @@ public class playerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             rb.AddForce(Vector3.right * speed);
-        }
+        } */
 
         Vector3 playerLook = myCam.transform.TransformDirection(Vector3.forward);
         myLook += DeltaLook() * Time.deltaTime;
@@ -80,7 +81,7 @@ public class playerMovement : MonoBehaviour
     Vector3 DeltaLook()
     {
         Vector3 deltaLook = Vector3.zero;
-        Vector3 moveDir = Vector3.zero;
+        //Vector3 moveDir = Vector3.zero;
         float rotY = Input.GetAxisRaw("Mouse Y") * lookSpeed;
         float rotX = Input.GetAxisRaw("Mouse X") * lookSpeed;
 
